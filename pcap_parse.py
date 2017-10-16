@@ -120,8 +120,8 @@ def main():
         else:
             excel_entry.append('None')
 
-        packet_sizes.append(ip.len)
-        excel_entry.append(ip.len)
+        packet_sizes.append(eth.__len__()) #eth.__len__()
+        excel_entry.append(eth.__len__())
 
         allowed_frame_types = {
             dpkt.ip.IP_PROTO_TCP:'TCP',
@@ -179,7 +179,6 @@ def main():
         if size == 0: continue
         count = sum(map(lambda x: x<=size and x>packet_size_distribution[idx-1],packet_sizes))
         print(' <={} bytes: {}'.format(size,count))
-    print('Warning: Very large packet sizes indicate IP fragmentation.')
 
 if __name__ == "__main__":
     main()
