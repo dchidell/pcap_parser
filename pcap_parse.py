@@ -132,10 +132,15 @@ def main():
         if ip.p in list(allowed_frame_types.keys()):
             excel_entry.append(allowed_frame_types[ip.p])
             l4_proto = ip.data
-            if ip.p in (dpkt.ip.IP_PROTO_TCP,dpkt.ip.IP_PROTO_UDP):
-                excel_entry.append(l4_proto.sport)
-                excel_entry.append(l4_proto.dport)
+            if type(l4_proto) in (dpkt.tcp.TCP,dpkt.udp.UDP):
+                if ip.p in (dpkt.ip.IP_PROTO_TCP,dpkt.ip.IP_PROTO_UDP):
+                    excel_entry.append(l4_proto.sport)
+                    excel_entry.append(l4_proto.dport)
+                else:
+                    excel_entry.append('N/A')
+                    excel_entry.append('N/A')
             else:
+                excel_entry.append('Other')
                 excel_entry.append('N/A')
                 excel_entry.append('N/A')
         else:
