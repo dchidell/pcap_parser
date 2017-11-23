@@ -101,7 +101,12 @@ def main():
             current_percent = percent_done
             progress(current_packet, packet_count, status=' Processing PCAP')
 
-        eth = dpkt.ethernet.Ethernet(packet)
+        try:
+            eth = dpkt.ethernet.Ethernet(packet)
+        except dpkt.dpkt.NeedData:
+            print('Error Handling Packet Number: {}'.format(current_packet))
+            continue
+        
         if eth.type!=dpkt.ethernet.ETH_TYPE_IP:
             continue
         ip_count += 1
