@@ -80,6 +80,8 @@ def main():
     packet_count = 0
     ip_count = 0
     vlan_dict = {}
+    srcip_dict = {}
+    dstip_dict = {}
     packet_sizes = []
     
     print('*** Processing packets and writing excel! This can take a while if you have a large pcap!')
@@ -112,9 +114,13 @@ def main():
         excel_entry.append(raw_ip_to_string(ip.src))
         excel_entry.append(raw_ip_to_string(ip.dst))
 
-        #if eth.tag in srcip_dict:
-        #        vlan_dict[eth.tag] += 1
-        #    else: vlan_dict[eth.tag] = 1
+        if ip.src in srcip_dict:
+            srcip_dict[ip.src] += 1
+        else: srcip_dict[ip.src] = 1
+
+        if ip.dst in dstip_dict:
+            dstip_dict[ip.dst] += 1
+        else: dstip_dict[ip.dst] = 1
 
         if hasattr(eth,'tag'):
             excel_entry.append(eth.tag)
@@ -164,6 +170,8 @@ def main():
     print('* Capture Time: {:0.2f} seconds'.format(last_ts-first_ts))
     print('* Max Packet Size: {} bytes'.format(max(packet_sizes)))
     print('* Min Packet Size: {} bytes'.format(min(packet_sizes)))
+    print('* Source IP count: {}'.format(len(srcip_dict)))
+    print('* Destination IP count: {}'.format(len(dstip_dict)))
     print('* Average Capture Data rate: {:0.2f} pps'.format(packet_count/(last_ts-first_ts)))
     print('* VLAN Count: {}'.format(len(vlan_dict)))
 
