@@ -120,8 +120,8 @@ def main():
         else:
             excel_entry.append('None')
 
-        packet_sizes.append(eth.__len__()) #eth.__len__()
-        excel_entry.append(eth.__len__())
+        packet_sizes.append(eth.len) #eth.__len__()
+        excel_entry.append(eth.len)
 
         allowed_frame_types = {
             dpkt.ip.IP_PROTO_TCP:'TCP',
