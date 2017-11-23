@@ -110,7 +110,7 @@ def main():
 
         excel_entry = []
         ip = eth.data
-        excel_entry.append(ts)
+        excel_entry.append(ts-first_ts)
         excel_entry.append(raw_ip_to_string(ip.src))
         excel_entry.append(raw_ip_to_string(ip.dst))
 
@@ -195,7 +195,8 @@ def main():
     for idx,size in enumerate(packet_size_distribution):
         if size == 0: continue
         count = sum(map(lambda x: x<=size and x>packet_size_distribution[idx-1],packet_sizes))
-        print(' <={} bytes: {}'.format(size,count))
+        percentage_distribution = round((count/packet_count)*100,2)
+        print(' <={} bytes: {} ({}%)'.format(size,count,percentage_distribution))
 
 if __name__ == "__main__":
     main()
