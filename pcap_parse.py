@@ -112,6 +112,10 @@ def main():
         excel_entry.append(raw_ip_to_string(ip.src))
         excel_entry.append(raw_ip_to_string(ip.dst))
 
+        #if eth.tag in srcip_dict:
+        #        vlan_dict[eth.tag] += 1
+        #    else: vlan_dict[eth.tag] = 1
+
         if hasattr(eth,'tag'):
             excel_entry.append(eth.tag)
             if eth.tag in vlan_dict:
@@ -120,8 +124,8 @@ def main():
         else:
             excel_entry.append('None')
 
-        packet_sizes.append(eth.len) #eth.__len__()
-        excel_entry.append(eth.len)
+        packet_sizes.append(ip.len) #eth.__len__()
+        excel_entry.append(ip.len)
 
         allowed_frame_types = {
             dpkt.ip.IP_PROTO_TCP:'TCP',
